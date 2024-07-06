@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="icon.png">
+    <title>SQL</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1 class="tituloPrincipal"><u>Introducción a SQL</u></h1>
+    </header>
+    <div>
+        <div>
+            <h1 class="tituloSecundario">DDL (Definición) y DCL (Control)</h1>
+            <div>
+                <h2>Cómo crear un usuario</h2>
+                <ul>
+                    <li>Desde la consola 'psql', poner los siguientes datos</li>
+                    <li>Server [localhost]: 127.0.0.1</li>
+                    <li>Database [postgres]: postgres</li>
+                    <li>Port [5432]: 5432</li>
+                    <li>Username [postgres]: postgres</li>
+                    <li>Contraseña para usuario postgres:</li>
+                    <li>Para crear el usuario usar:</li>
+                </ul>
+                <p>Segundo usuario: leonel 'Dni41622287'</p>
+                <p>Tercer usuario: usuarioprueba '1234'</p>
+                <pre>
+                    <code>
+                    CREATE USER nombre_usuario PASSWORD 'contraseña';
+                    </code>
+                </pre>
+            </div>
+    
+            <h2>Cómo crear una Base de Datos</h2>
+                <ul>
+                    <li>Desde la consola 'psql', usar:</li>
+                    <li>El OWNER es para indicar quién es el dueño de la base de datos</li>
+                </ul>
+                <p>Creé otra base db_leonel OWNER leonel</p>
+                <pre>
+                    <code>
+                    CREATE DATABASE nombre_database OWNER nombre-usuario';
+                    </code>
+                </pre>
+            </div>
+    
+            <div>
+                <h2>Cambiar la contraseña a un usaurio</h2>
+                <pre>
+                    <code>
+                    ALTER ROLE nombre_usuario PASSWORD 'nueva_contraseña';
+                    </code>
+                </pre>
+            </div>
+    
+            <div>
+                <h2>Cómo cambiar quién es el dueño de la base de datos</h2>
+                <pre>
+                    <code>
+                    ALTER DATABASE nombre_database OWNER TO nombre_usuario;
+                    </code>
+                </pre>
+            </div>
+    
+            <div>
+                <h2>Cómo entrar a otra base de datos con otro usuario</h2>
+                <ul>
+                    <li>Desde la consola:</li>
+                </ul>
+                <pre>
+                    <code>
+                    \c nombre_database nombre_usuario
+                    </code>
+                </pre>
+            </div>
+    
+            <div>
+                <h2>Cómo crear una tabla</h2>
+                <ul>
+                    <li>Es buena práctica que las palabras resevadas las escribamos en mayuscula, aunque no sea sencible a ellas</li> 
+                    <li>El nombre de las tablas deben ser en minúscula y plural</li>
+                    <li>Las propiedades se declaran entre paréntesis</li>
+                    <li>El nombre de las propiedades deben estar en minúscula</li>
+                    <li>En caso de ser compuesta se separa con guión medio</li>
+                    <li>La separación entre propiedades es con coma</li>
+                    <li>El paréntesis se cierra con punto y coma</li>
+                </ul>
+                <pre>
+                    <code>
+                    CREATE TABLE nombre (
+                        propiedad TIPO_DE_PROPIEDAD,
+                        propiedad TIPO_DE_PROPIEDAD
+                    );
+                    </code>
+                </pre>
+            </div>
+    
+            <div>
+                <h2>Cómo borrar una columna de una tabla ya creada</h2>
+                <ul>
+                    <li>El comando se escribe en una sola linea</li>
+                    <li>Señalamos primero la tabla y luego la columna de esa tabla a borrar</li>
+                    <li>La línea se cierra con un punto y coma</li>
+                </ul>
+                <pre>
+                    <code>
+                    ALTER TABLE nombre_tabla DROP COLUMN nombre_propiedad;
+                    </code>
+                </pre>
+            </div>
+    
+            <div>
+                <h2>Agrear una columna a una tabla existente</h2>
+                <ul>
+                    <li>Similar al anterior</li>
+                    <li>Le indicamos el nombre de la propiedad y el tipo de dato que almacena</li>
+                </ul>
+                <pre>
+                    <code>
+                    ALTER TABLE nombre_tabla ADD CLUMN nombre_propiedad TIPO_DATO;
+                    </code>
+                </pre>
+            </div>
+    
+            <div>
+                <h2>Cómo borrar una tabla</h2>
+                <ul>
+                    <li>Es un comando simple</li>
+                </ul>
+                <pre>
+                    <code>
+                    DROP TABLE nombre_tabla;
+                    </code>
+                </pre>
+            </div>
+    
+            <div>
+                <h2>Otorgar o quitar permisos a los usuarios</h2>
+                <ul>
+                    <li>Desde la consola 'psql', y con el usuario padre postgres</li>
+                    <li>Accedemos a la base db_leonel con "usuarioprueba" y no tenemos permiso para nada</li>
+                    <li>Volvemos a logearnos a db_leonel con leonel (que es el OWNER)</li>
+                    <li>Para dar permisos usamos el GRANT, para quitar usamos el REVOKE</li>
+                    <li>Le damos a usuarioprueba GRANT para SELECT en la tabla persons</li>
+                </ul>
+                <pre>
+                    <code>
+                    GRANT SELECT ON nombre_tabla TO nombre-usuario
+                    </code>
+                    <code>
+                    REVOKE SELECT ON nombre_tabla FROM nombre-usuario
+                    </code>
+                </pre>
+            </div>
+    
+            <div>
+                <h2>Hacer a otro usuario "SUPERUSUARIO"</h2>
+                <ul>
+                    <li></li>
+                </ul>
+                <pre>
+                    <code>
+                    No me acuerdo como había hecho
+                    </code>
+                </pre>
+            </div>
+        </div>
+        <br><br><br>
+        <div>
+            <h1 class="tituloSecundario">DML (Manipulación)</h1>
+            <div>
+                <p>Cosas extras:</p>
+                <ul>
+                    <li>Para generar un id aleatorio usamos la funcion: "gen_random_uuid()"</li>
+                    <li>Para capturar la fecha y hora actual del ordenador: "now()"</li>
+                    <li>Cuando quiero comparar si un campo es NULL, no debo usar el '=', tengo que poner 'IS NULL'</li>
+                </ul>
+            </div>
+            <div>
+                <h2>Cómo ingresar los datos a nuestras tablas</h2>
+                <p>Utilizando el comando INSERT, tenemos muchas variantes de cómo ingresar datos:</p>
+                <ul>
+                    <li>
+                        Forma 1:
+                        <ul>
+                            <li>Especificando las columnas y el valor que le ponemos a cada una</li>
+                        </ul>
+                        <pre>
+                            <code>
+                            INSERT INTO nombre_tabla (nombre_atributos) VALUES (nombre_valores);
+                            </code>
+                        </pre>
+                    </li>
+                    
+                    <li>
+                        Forma 2:
+                        <ul>
+                            <li>No especificando las columnas por lo que el valor que le ponemos a cada una es en el orden que están declaradas en la tabla</li>
+                        </ul>
+                        <pre>
+                            <code>
+                            INSERT INTO nombre_tabla VALUES (valores);
+                            </code>
+                        </pre>
+                    </li>
+
+                    <li>
+                        Forma 3:
+                        <ul>
+                            <li>
+                                En este caso, suponiendo que ya hayamos definido valores al momento de 
+                                crear la tabla, usamos el valor DEFAULT para dejar los valores de esos 
+                                atributos que ya tenian
+                            </li>
+                        </ul>
+                        <pre>
+                            <code>
+                            CREATE TABLE students (
+                                id UUID DEFAULT gen_random_uuid(),
+                                first_name VARCHAR(50),
+                                is_active BOOL DEFAULT true,
+                                created_at TIMESTAMP DEFAULT now()
+                            );
+                            
+                            INSERT INTO nombre_tabla VALUES (DEFAULT, 'Leonel', DEFAULT, DEFAULT);
+                            </code>
+                        </pre>
+                    </li>
+
+                    <li>
+                        Forma 4:
+                        <ul>
+                            <li>
+                                En caso de insertar más de un registro, se puede hacer de la siguiente forma,
+                                de modo que solo pongamos las palabras reservadas una vez:
+                            </li>
+                        </ul>
+                        <pre>
+                            <code>
+                            INSERT INTO nombre_tabla VALUES 
+                            (valores 2),
+                            (valores 3),
+                            (valores 4),
+                            (valores n);
+                            </code>
+                        </pre>
+                    </li>
+
+                    <li>
+                        Forma 5:
+                        <ul>
+                            <li>Cómo traer datos de otra tabla, dentro de la misma base</li>
+                        </ul>
+                        <pre>
+                            <code>
+                            INSERT INTO nombre_tabla (nombre_columnas) 
+                            SELECT columna_columna_tabla2, nombre_columna_tabla2
+                            FROM nombre_tabla2;
+                            </code>
+                        </pre>
+                    </li>
+
+                    <li>
+                        Forma 6:
+                        <ul>
+                            <li>Cómo obligar a las columnas a tener datos si o si, y que no queden nulas</li>
+                            <li>Se debe usar NOT NULL al moomento de crear la tabla, en el campo que se requiera</li>
+                        </ul>
+                        <pre>
+                            <code>
+                            CREATE TABLE nombre_tabla (
+                                nombre_propiedad tipo_dato valor_dato(en caso de asignarlo por defecto) NOT NULL,
+                                nombre_propiedad tipo_dato valor_dato(en caso de asignarlo por defecto) NOT NULL
+                            );
+                            </code>
+                        </pre>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h2>Actializar y borrar datos</h2>
+                <ul>
+                    <li>
+                        Actualizar:
+                        <ul>
+                            <li>Para actualizar le indicamos el nombre de la tabla, cuál es la propiedad y
+                                cuál es el nuevo valor, y por ultimo cuál es el id del que tiene que 
+                                recibir el nuevo valor
+                            </li>
+                            <li>Es importante siempre poner el WHERE porque podemos actualizar todas las
+                                tuplas existentes con ese valor; a menos que justamente se quiera actualizar
+                                todas las tuplas con el mismo valor en esa propiedad
+                            </li>
+                        </ul>
+                        <pre>
+                            <code>
+                            UPDATE nombre_tabla
+                            SET nombre_propiedad = nuevo_valor, nombre_propiedad_n = nuevo_valor_n
+                            WHERE primary_key = valor_pk;
+                            </code>
+                        </pre>
+                    </li>
+
+                    <li>
+                        Borrar valores de las tuplas:
+                        <ul>
+                            <li>Debo tener mucho más cuidado con el WHERE ya que puedo borrar toda la información
+                                por un descuido
+                            </li>
+                        </ul>
+                        <pre>
+                            <code>
+                            DELETE FROM nombre_tabla WHERE nombre_propiedad = 'nombre_valor';
+                            </code>
+                            <code>
+                            DELETE FROM nombre_tabla WHERE nombre_propiedad IS NULL;
+                            </code>
+                        </pre>
+                    </li>
+
+                    <li>
+                        Borrar el contenido de una tabla:
+                        <ul>
+                            <li>Este comando borra el contenido de tablas enteras, ni siquiera lleva WHERE</li>
+                            <li>No borra las propiedades, solo los valores, queda sin tuplas</li>
+                        </ul>
+                        <pre>
+                            <code>
+                            TRUNCATE TABLE nombre_tabla;
+                            </code>
+                        </pre>
+                    </li>
+                </ul>
+            </div>
+            
+            <div>
+                <hgroup>
+                    <h2>Restricciones</h2>
+                    <h3>Cómo establecer una PK ()Primary KEy / Llave Primaria</h3>
+                </hgroup>
+                <ul>
+                    <li>Puede declararse como un atributo sobre la misma linea en que se declara a la propiedad</li>
+                    <li>Puede ponerse al final de la creacion de la de la tabla (antes de cerrarla) un comando 
+                        indicando, con la palabra reservada CONSTRAINT, cuáles tienen 
+                        restricciones (el nombre_constraint se como de 'nombreTabla_propiedad_tipoKey'), tipo de 
+                        clave, y a que propiedad se le aplica (entre paréntesis)
+                    </li>
+                </ul>
+                <pre>
+                    <code>
+                    CREATE TABLE nombre_tabla (
+                        id UUID gen_random_uuid() NOT NULL PRIMATY KEY,
+                        otraPropiedad,
+                        propiedad_n
+                    );
+                    </code>
+                    <code>
+                    CREATE TABLE nombre_tabla (
+                        id UUID gen_random_uuid() NOT NULL,
+                        otraPropiedad,
+                        propiedad_n,
+                        CONSTRAINT nombre_constraint PRIMARY KEY (nombre_propiedad),
+                        //CONSTRAINT persons_id_pk PRIMARY KEY (id)
+                    );
+                    </code>
+                </pre>
+
+                <h3>Cómo establecer una UK (Unique Key / Llave Unica)</h3>
+                <ul>
+                    <li>Esta llave indica que aunque la propiedad no corresponda a una PK, no puede estar
+                        repetido su valor en dos tuplas
+                    </li>
+                    <li>En este ejemplo no solo le aplicamos esta llave a un campo (como podría ser un Dni41622287),
+                        sino que se la estamos aplicando a un conjunto de propiedades (de modo que no puedan haber
+                        dos tuplas con la misma convinación de valores)
+                    </li>
+                </ul>
+                <pre>
+                    <code>
+                        CREATE TABLE nombre_tabla (
+                            id UUID gen_random_uuid() NOT NULL,
+                            propiedad_1 VARCHAR(50) NOT NULL,
+                            propiedad_2 VARCHAR(50) NOT NULL,
+                            propiedad_n,
+                            CONSTRAINT nombre_constraint PRIMARY KEY (nombre_propiedad),
+                            //CONSTRAINT persons_id_pk PRIMARY KEY (id),
+                            CONSTRAINT nombre_constraint UNIQUE (nombre_propiedad, nombre_propiedad),
+                            CONSTRAINT persons_propiedad_1_propiedad_2_uk UNIQUE (propiedad_1, propiedad_2)
+                        );
+                    </code>
+                </pre>
+
+                <h3>Cómo establecer una FK (Foreing Key / Llave Foránea)</h3>
+                <ul>
+                    <li>Son las llaves que nos permiten relacionar dos tablas entre sí</li>
+                    <li>Hay que ponerle un nombre al CONSTRAINT, e indicarle el nombre del
+                        CONSTRAINT con la PK de la otra tabla con la que se la quiere relacionar,
+                        indicarle que medidas tomar cuando se quiere cambiar los
+                        datos de la tabla padre, Y por último, indicarle que medidas tomar
+                        cuando se quiere borrar los datos de la tabla padre:
+                    </li>
+                    <li>Puede ser RESTRICT para no permitir que se hagan cambio (cambios sobre
+                        la PK) o CASCADE para indicarle que si hay cambios en la tabla padre, 
+                        la tabla hijo lo acompañe
+                    </li>
+                </ul>
+                <pre>
+                    <code>
+                    CREATE TABLE nombre_tabla (
+                        id UUID gen_random_uuid() NOT NULL,
+                        propiedad_1 VARCHAR(50) NOT NULL,
+                        propiedad_2 VARCHAR(50) NOT NULL,
+                        propiedad_n,
+                        CONSTRAINT nombre_constraint PRIMARY KEY (nombre_propiedad),
+                        //CONSTRAINT persons_id_pk PRIMARY KEY (id),
+                        CONSTRAINT nombre_constraint UNIQUE (nombre_propiedad, nombre_propiedad),
+                        CONSTRAINT persons_propiedad_1_propiedad_2_uk UNIQUE (propiedad_1, propiedad_2),
+                        CONSTRAINT nombreTabla_nombreOtraTabla_nombrePropiedad_fk FOREING KEY (persons_id)
+                        REFERENCES persons (id)
+                        ON UPDATE RESTRICT
+                        ON DELETE RESTRICT;
+                    );
+                    </code>
+                    <code>
+                        CREATE TABLE nombre_tabla (
+                            id UUID gen_random_uuid() NOT NULL,
+                            propiedad_1 VARCHAR(50) NOT NULL,
+                            propiedad_2 VARCHAR(50) NOT NULL,
+                            propiedad_n,
+                            CONSTRAINT nombre_constraint PRIMARY KEY (nombre_propiedad),
+                            //CONSTRAINT persons_id_pk PRIMARY KEY (id),
+                            CONSTRAINT nombre_constraint UNIQUE (nombre_propiedad, nombre_propiedad),
+                            CONSTRAINT persons_propiedad_1_propiedad_2_uk UNIQUE (propiedad_1, propiedad_2),
+                            CONSTRAINT nombreTabla_nombreOtraTabla_nombrePropiedad_fk FOREING KEY (persons_id)
+                            REFERENCES persons (id)
+                            ON UPDATE CASCADE;
+                            ON DELETE CASCADE;
+                        );
+                    </code>
+                </pre>
+            </div>
+        </div>
+        <div>
+            <h1 class="tituloSecundario">Profundización sobre SELECT</h1>
+            <div>
+                <h2>Cláusula SELECT</h2>
+                <p>Puede recibir constantes, cast, expresiones, funciones, campos de tablas o alias</p>
+                <h3>Constantes</h3>
+                <pre>
+                    <code>
+                    SELECT 'Hola mundo';
+                    SELECT 10;
+                    </code>
+                </pre>
+
+                <h3>Expresiones</h3>
+                <pre>
+                    <code>
+                    SELECT 2+2+2/2;
+                    </code>
+                </pre>
+
+                <h3>Cast</h3>
+                <ul>
+                    <li>Es cambiar el tipo de dato, esto lo hacemos: 'valor::tipo_dato'</li>
+                    <li>Por defecto, si no aclaramos, el SELECT asume que los datos numericos 
+                        son enteros, por lo que si queremos una devolución decimal hacemos 
+                        '::numeric' después del número
+                    </li>
+                </ul>
+                <pre>
+                    <code>
+                    SELECT 8/23::numeric;
+                    </code>
+                </pre>
+
+                <h3>Funciones</h3>
+                <ul>
+                    <li>Son métodos nativos que aplicamos en el código y nos devuelve la información requerida</li>
+                    <li>Algunos ejemplos: (También se pueden crear funciones propias)</li>
+                </ul>
+                <pre>
+                    <code>
+                    SELECT gen_random_uuid(); [Esto genera una clave ID]
+                    SELECT now(); [Esto toma la fecha actual del ordenador]
+                    SELECT upper(parámetro); [Convierte lo que le ponemos por parámetro a mayúsculas]
+                    SELECT lower(parámetro); [Convierte lo que le ponemos por parámetro a minúsculas]
+                    </code>
+                </pre>
+
+                <h3>Camops de Tablas</h3>
+                <ul>
+                    <li>Para consultar información, debemos indicar qué campos, en qué orden y de qué (FROM) tabla</li>
+                </ul>
+                <pre>
+                    <code>
+                    SELECT * FROM nombre_tabla;
+                    SELECT id, first_name, birthday FROM persons;
+                    SELECT first_name, birthday, id FROM persons;
+                    </code>
+                </pre>
+
+                <h3>Alias</h3>
+                <ul>
+                    <li>Cuando al solicitar un campo de una tabla, le aplicamos alguna función, podemos observar que
+                        el nombre de la propiedad es confusa, esto lo solucionamos aplicando un alias con la palabra
+                        reservada AS, con la que le indicamos cómo queremos que se llame el campo.
+                    </li>
+                </ul>
+                <pre>
+                    <code>
+                    SELECT id, upper(first_name), last_name FROM persons;
+                    SELECT id, upper(first_name) AS first_name, last_name FROM persons;
+                    SELECT id, upper(first_name)::VARCHAR(50) AS first_name, last_name FROM persons;
+                    </code>
+                </pre>
+            </div>
+
+            <div>
+                <h2>Filtros WHERE</h2>
+                <ul>
+                    <li>El WHERE tiene el siguiente formato:</li>
+                    <pre>
+                        <code>
+                        WHERE nombre_propiedad = 'nombre_valor';
+                        SELECT * FROM persons WHERE first_name = 'Leonel';
+                        </code>
+                    </pre>
+
+
+                    <li>Podemos aplicarle funciones</li>
+                    <pre>
+                        <code>
+                        SELECT * FROM persons WHERE upper(first_name) = 'Leonel';
+                        </code>
+                    </pre>
+
+                    <li>Podemos usar operadores de comparación</li>
+                    <pre>
+                        <code>
+                        = para igualdad;
+                        <, >, <=, >= para comparar por ejemplo numeros, fechas, o incluso strings, que compara como un diccionario;
+                        <> para diferencias, sería el '!=';
+                        </code>
+                    </pre>
+
+                    <li>AND y OR</li>
+                    <pre>
+                        <code>
+                        SELECT * FROM persons WHERE upper(first_name) = 'Leonel' AND last_name <> '';
+                        SELECT * FROM persons WHERE upper(first_name) = 'Leonel' OR last_name <> '';
+                        </code>
+                    </pre>
+
+                    <li>LIKE</li>
+                    <li>Sirve para filtrar con caracteres 'comodín' cuando no sabemos el valor completo de lo que buscamos</li>
+                    <li>Podemos reemplazar con guión bajo en los lugares donde no estamos seguros como se escribe, cuando sabemos exactamente en que lugar y cuantas letras son</li>
+                    <li>Cuando no recordamos lo anterior, podemos usar '%' para indicarle las letras que recordamos y que nos devuelva todo lo que contenga esos caracteres,
+                        pueden estar al principio, al final, o ambos
+                    </li>
+                    <pre>
+                        <code>
+                        SELECT * FROM persons WHERE upper(first_name) LIKE 'Alexys';
+                        SELECT * FROM persons WHERE upper(first_name) LIKE 'Alex_s';
+                        SELECT * FROM persons WHERE upper(first_name) LIKE 'Ale%';
+                        SELECT * FROM persons WHERE upper(first_name) LIKE '%xys';
+                        SELECT * FROM persons WHERE upper(first_name) LIKE '%lex%';
+                        </code>
+                    </pre>
+
+
+
+
+                </ul>
+            </div>
+
+
+
+
+
+
+
+
+            <div>
+                <h2></h2>
+                <ul>
+                    <li></li>
+                </ul>
+                <pre>
+                    <code></code>
+                </pre>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

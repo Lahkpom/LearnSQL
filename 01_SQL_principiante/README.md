@@ -3,7 +3,7 @@ Contraseña del dueño de la DB: @Dni41622287
 Puerto que utilizará PostgreSQL para escuchar (Por defecto es 5432): 5432
 
 
-# ###################################################
+****
 
 
 # CONCEPTOS GENERALES
@@ -15,7 +15,7 @@ Puerto que utilizará PostgreSQL para escuchar (Por defecto es 5432): 5432
 ## DML: Data Manipulation Languaje (CRUD)
 
 
-# ###################################################
+****
 
 
 # PRIMEROS PASOS
@@ -54,7 +54,92 @@ psql postgres postgres
 Donde psql es para tirar comandos con postgres, y seguido va el usuario y la contraseña, en este caso postgres postgres es la que viene por defecto, esto nos deja en postgres=# que es la terminal para manipular la DB, donde postgres es el nombre del usuario con el que me encuentro
 
 
-# ###################################################
+****
+
+
+# SOBRE LOS CLIENTES
+
+## psql cli
+\? Es como el help, lista todos los comandos del cliente
+\l Lista las DB del servidor
+\c permite conectarse a una DB (\c DBname) y para conectarnos a una DB con un usuario específico (\c DBname USERname)
+\d lista las relaciones de la DB en la que estamos parados (tablas, secuencias, índices)
+\dg muestra los roles y atributos
+\dt lista solo el nombre de las tables que posee la DB en la que estamos, y si queremos más info de una específica es \dt [NOMBRE-TABLA]
+\h es un help pero de las funciones de cada comando de SQL (\h INSERT)
+\i perimte ejecutar comandos de un archivo SQL externo (Esto usamos por ejemplo para recuperar desde un backup una DB borrada)
+\! nos permite ejecutar instrucciones válidas desde el bash, que no son aplicables para el cliente psql
+\q y nos regresa a los controles normales de la terminal
+
+## pgAdmin4
+
+
+****
+
+
+# TIPOS DE DATOS SOPORTADOS
+
+## Numerics
+
+- smallint              (-32.768 a 32.767)
+- integer               (-2.147.483.648 a 2.147.483.647)
+- bigint
+
+- smallserial           (1 a 32.767)
+- serial                (1 a 2.147.483.647)
+- bigserial
+
+- decimal, numeric
+- real                  (6 digits of precision)
+- double                (15 digits of precision)
+
+## Monetary
+
+- money                 (2 decimales)
+
+## Character
+
+- character varyng(n), varchar(n)   (length limit) tiene un límite que no sobrepasa
+- character(n), char(n)             (fixed-length, blank padded) tiene un espacio fijo definido, lo que no se usa lo autocompleta
+- text                              (unlimited length)
+
+## Data / Time
+
+- timestamp (p)     (date and time)
+- date
+- time (p)          (24:00:00)
+- interval          (Nos permite controlar un intervalo específico dentro del tiempo)
+    - YEAR
+    - MONTH
+    - DAY
+    - HOUR
+    - MINUTE
+    - SECOND
+
+## Boolean
+
+- boolean
+    - true = yes, on, 1
+    - false = no, off, 0
+
+## Enumerated (es un enum que podemos crear con valores predefinidos)
+
+- CREATE TYPE feel AS ENUM ('sad', 'ok', 'happy')
+
+## Geometrics
+
+- Sirve para almacenar datos como coordenadas para ubicaciones como Uber
+
+## UUID
+
+- Guarda un id pero con un formato que parece encriptado
+
+## JSON
+
+- Almacena tipos de datos json que podemos ejecutar en otro momento e incluso podemos consultar los campos de dentro
+
+
+****
 
 
 # SOBRE LA BASE DE DATOS
@@ -84,10 +169,14 @@ CREATE TABLE [TABLE_NAME] (id serial);
 
 ## Para cambiar el propietario de una DB:
 
-ALTER TABLE [DB_NAME] OWNER TO [USER_NAME];
+ALTER DATABASE [DB_NAME] OWNER TO [USER_NAME];
+
+## Para cambiar el propietario de una DB:
+
+ALTER TABLE [TABLE_NAME] OWNER TO [USER_NAME];
 
 
-# ###################################################
+****
 
 
 # SOBRE LOS USUARIOS
@@ -102,21 +191,5 @@ CREATE USER [USER_NAME] PASSWORD '[PASWORD]';
 ALTER ROLE [USER_NAME] PASSWORD '[PASWORD]';
 
 
-# ###################################################
+****
 
-
-# SOBRE LOS CLIENTES
-
-## psql cli
-\? Es como el help, lista todos los comandos del cliente
-\l Lista las DB del servidor
-\c permite conectarse a una DB (\c DBname) y para conectarnos a una DB con un usuario específico (\c DBname USERname)
-\d lista las relaciones de la DB en la que estamos parados (tablas, secuencias, índices)
-\dg muestra los roles y atributos
-\dt lista solo el nombre de las tables que posee la DB en la que estamos, y si queremos más info de una específica es \dt [NOMBRE-TABLA]
-\h es un help pero de las funciones de cada comando de SQL (\h INSERT)
-\i perimte ejecutar comandos de un archivo SQL externo (Esto usamos por ejemplo para recuperar desde un backup una DB borrada)
-\! nos permite ejecutar instrucciones válidas desde el bash, que no son aplicables para el cliente psql
-\q y nos regresa a los controles normales de la terminal
-
-# PGADMIN4

@@ -1,5 +1,3 @@
-Contraseña del dueño de la DB: @Dni41622287
-
 Puerto que utilizará PostgreSQL para escuchar (Por defecto es 5432): 5432
 
 

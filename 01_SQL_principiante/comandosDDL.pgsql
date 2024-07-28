@@ -4,6 +4,8 @@
 
 --! TABLAS PARA MAIN
 
+--* CREAR TABLAS
+
 CREATE TABLE persons (
     id UUID,
     first_name VARCHAR(60),
@@ -22,3 +24,32 @@ CREATE TABLE jobs (
     ends_at DATE,
     is_currently BOOL
 );
+
+CREATE TABLE para_borrar (
+    id UUID,
+    how_to VARCHAR(50)
+);
+
+-- cON VALORES OR DEFECTO
+CREATE TABLE students (
+    id UUID DEFAULT gen_random_uuid(),
+    first_name VARCHAR(50),
+    is_active BOOL DEFAULT true,
+    created_at TIMESTAMP DEFAULT now()
+);
+
+--* ELIMINAR TABLAS
+
+DROP TABLE para_borrar;
+
+--* ELIMINAR COLUMNAS DE UNA TABLA
+
+ALTER TABLE persons DROP COLUMN age;
+
+--* AGREGAR COLUMNAS
+
+ALTER TABLE jobs ADD COLUMN job_name VARCHAR(50);
+
+
+
+

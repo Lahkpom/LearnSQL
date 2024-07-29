@@ -38,6 +38,20 @@ CREATE TABLE students (
     created_at TIMESTAMP DEFAULT now()
 );
 
+CREATE TABLE tmp_students (
+    first_name VARCHAR(50),
+    active BOOL    
+);
+
+-- con valores no nulos
+CREATE TABLE students2 (
+    id UUID DEFAULT gen_random_uuid() NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    is_active BOOL DEFAULT true NOT NULL,
+    created_at TIMESTAMP DEFAULT now() NOT NULL,
+    updated_at TIMESTAMP
+);
+
 --* ELIMINAR TABLAS
 
 DROP TABLE para_borrar;
@@ -49,6 +63,8 @@ ALTER TABLE persons DROP COLUMN age;
 --* AGREGAR COLUMNAS
 
 ALTER TABLE jobs ADD COLUMN job_name VARCHAR(50);
+
+
 
 
 

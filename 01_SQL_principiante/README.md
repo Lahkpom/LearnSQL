@@ -180,8 +180,17 @@ Donde psql es para tirar comandos con postgres, y seguido va el usuario y la con
         name VARCHAR(N)
     );
 
+### Declarando valores por defectos
+
     CREATE TABLE [TABLE_NAME] (
         id serial DEFAULT get_random_uuid(),
+        name VARCHAR(N)
+    );
+
+### Aclarando cuáles valores no pueden ser nulos
+
+    CREATE TABLE [TABLE_NAME] (
+        id serial DEFAULT get_random_uuid() NOT NULL,
         name VARCHAR(N)
     );
 
@@ -209,14 +218,26 @@ Donde psql es para tirar comandos con postgres, y seguido va el usuario y la con
     INSERT INTO [TABLE_NAME] VALUES (VALUES);
 
 ### USANDO VALORES POR DEFECTO DEFINIDOS AL MOMENTO DE CREAR LA TABLA
-    INSERT INTO [TABLE_NAME] VALUES (VALUES);
+    INSERT INTO [TABLE_NAME] VALUES (VALUE_1, DEFAULT, VALUE_N);
 - Si no declaramos un valor por defecto al momento de crear la tabla, nos lo dejará null o vacío
 
-### PONIENDO EN ORDEN TODOS LOS DATOS COMPLETOS DE LA TABLA
-    INSERT INTO [TABLE_NAME] VALUES (VALUES);
+***
+    INSERT INTO [TABLE_NAME] (CAMPO_N) VALUES (VALUE_N);
+- De esta forma los campos con valores por defecto no necesitan ser especificados como tal
 
-### PONIENDO EN ORDEN TODOS LOS DATOS COMPLETOS DE LA TABLA
-    INSERT INTO [TABLE_NAME] VALUES (VALUES);
+### PARA PONER VARIOS REGISTROS A LA VEZ
+    INSERT INTO [TABLE_NAME] VALUES (VALUES_1), (VALUES_N);
+***
+    INSERT INTO [TABLE_NAME] (CAMPO_1, CAMPO_N) 
+    VALUES 
+    (VALUE_1, VALUE_N), (VALUE_1, VALUE_N);
+
+### ARMAR REGISTROS CON LOS DATOS DE OTRA TABLA (DEBEN COINCIDIR LOS TIPO DE DATO DE LOS REGISTROS DE DONDE SE VA A SACAR LOS DATOS, Y VA A USAR TODOS LOS DATOS DE LA OTRA TABLA):
+    INSERT INTO [TABLE_A_NAME] (CAMPO_1, CAMPO_N) 
+    SELECT CAMPO_1, CAMPO_N
+    FROM [TABLE_B_NAME];
+
+### cuando defino los cmapos como NOT NULL no puedo dejarlos vacíos nunca
 
 
 ****
@@ -240,6 +261,8 @@ Donde psql es para tirar comandos con postgres, y seguido va el usuario y la con
 ## REVOCAR PERMISO DE CONSULTA A OTRO USUARIO A MI TABLA
 
     REVOKE SELECT ON [TABLE_NAME] FROM [USER_NAME];
+
+##
 
 
 ****

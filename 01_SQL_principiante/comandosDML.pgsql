@@ -129,3 +129,36 @@ DELETE FROM para_borrar;
 --! EN RESUMEN HACEN LO MISMO PERO DELETE PUEDE LLEVAR PARÁMETRO
 TRUNCATE TABLE para_borrar;
 
+--! SELECT
+
+--? CONSTANTES
+SELECT 'HELLO WORLD';
+
+SELECT 8;
+
+--? EXPRESIONES
+SELECT 2*2+2/2;
+
+--? CAST
+SELECT 8::NUMERIC / 23::NUMERIC;
+SELECT 8::VARCHAR(2);
+
+--? FUNCIONES
+SELECT now();
+SELECT upper('hello world');
+
+--? CAMPOS DE TABLAS
+SELECT id FROM persons;
+SELECT * FROM persons;
+SELECT first_name, birthday FROM persons;
+
+SELECT id, 'HOLA', upper(first_name), 2 + 2, birthday::TIMESTAMP 
+FROM persons;
+
+--? ALIAS
+SELECT id, 
+'HOLA' AS ALIAS_1, 
+upper(first_name) AS ALIAS_2, 
+2 + 2 AS ALIAS_3, 
+birthday::TIMESTAMP 
+FROM persons;

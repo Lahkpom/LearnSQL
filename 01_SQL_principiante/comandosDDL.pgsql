@@ -52,7 +52,7 @@ CREATE TABLE students2 (
     updated_at TIMESTAMP
 );
 
---? CREAR TABLAS CON PK
+--? CREAR TABLAS CON PK, UK Y FK
 DROP TABLE persons;
 DROP TABLE jobs;
 
@@ -68,11 +68,16 @@ CREATE TABLE persons (
 );
 
 CREATE TABLE jobs (
-    id UUID,
-    persons_id UUID,
-    beggins_at DATE,
-    ends_at DATE,
-    is_currently BOOL
+    id UUID DEFAULT gen_random_uuid() NOT NULL,
+    persons_id UUID NOT NULL,
+    job_name VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT now() NOT NULL,
+    updated_at TIMESTAMP,
+    CONSTRAINT jobs_id_pk PRIMARY KEY (id),
+    CONSTRAINT jobs_persons_id_fk FOREIGN KEY (persons_id)
+        REFERENCES persons (id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT
 );
 
 

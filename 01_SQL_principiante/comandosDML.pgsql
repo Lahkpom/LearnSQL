@@ -90,3 +90,42 @@ INSERT INTO students VALUES (NULL, NULL, NULL, NULL);
 -- INSERT INTO students2 VALUES (NULL, NULL, NULL, NULL, NULL);
 INSERT INTO students2 (first_name) VALUES ('Leonel');
 
+--? ACTUALIZAR INFORMACIÓN DE LAS TABLAS
+UPDATE students
+SET first_name = 'XXXXXXXXX', is_active = false
+WHERE first_name = 'student4';
+
+UPDATE students
+SET is_active = false;
+
+UPDATE students
+SET first_name = 'This was null', is_active = false
+WHERE first_name IS NULL;
+
+UPDATE students
+SET id = gen_random_uuid()
+WHERE id IS NULL;
+
+--? BORRAR INFORMACIÓN DE LAS TABLAS
+INSERT INTO students (id, first_name)
+VALUES (NULL, 'BORRAR');
+
+DELETE FROM students 
+WHERE id IS NULL;
+
+DELETE FROM students 
+WHERE first_name = 'BORRAR';
+
+--? TRUNCATE NO BORRA SOLO EL CONTENIDO SINO QUE TODA LA TABLA ENTERA
+CREATE TABLE para_borrar (
+    id UUID DEFAULT gen_random_uuid() NOT NULL,
+    a VARCHAR(10)
+);
+
+INSERT INTO para_borrar (a)
+VALUES ('ALE'), ('FACU'), ('LEO'), ('FIO'); 
+
+DELETE FROM para_borrar;
+--! EN RESUMEN HACEN LO MISMO PERO DELETE PUEDE LLEVAR PARÁMETRO
+TRUNCATE TABLE para_borrar;
+

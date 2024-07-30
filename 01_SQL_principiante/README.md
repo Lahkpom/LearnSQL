@@ -6,12 +6,21 @@ Puerto que utilizará PostgreSQL para escuchar (Por defecto es 5432): 5432
 
 # CONCEPTOS GENERALES
 
-## DDL: Data Definition Languaje para definir las bases de datos, tablas, y sus atributos
+## TIPOS DE LENGUAJES DE CONTROL
 
-## DCL: Data Control Languaje para proteger los privilegios de los usuarios de las DB
+### DDL: Data Definition Languaje para definir las bases de datos, tablas, y sus atributos
 
-## DML: Data Manipulation Languaje (CRUD)
+### DCL: Data Control Languaje para proteger los privilegios de los usuarios de las DB
 
+### DML: Data Manipulation Languaje (CRUD)
+
+## TIPOS DE RESTRICCIONES
+
+### PRIMARY KEY (PK). NO PUEDE REPERTIRSE, Y APARTE IDENTIFCA AL ROW DENTRO DE LA TABLA
+
+### FOREING KEY (FK)
+
+### UNIQUE KEY (UK). NO IDENTIFICA AL ROW DENTRO DE LA TABLA, PERO TAMPOCO PUEDE ESTAR REPETIDO
 
 ****
 
@@ -176,22 +185,38 @@ Donde psql es para tirar comandos con postgres, y seguido va el usuario y la con
 ## Para crear nuevas tablas:
 
     CREATE TABLE [TABLE_NAME] (
-        id serial,
-        name VARCHAR(N)
+        [COLUMN_NAME] [DATA_TYPE],
+        [COLUMN_NAME] [DATA_TYPE]
     );
 
 ### Declarando valores por defectos
 
     CREATE TABLE [TABLE_NAME] (
-        id serial DEFAULT get_random_uuid(),
-        name VARCHAR(N)
+        [COLUMN_NAME] [DATA_TYPE] DEFAULT [DEFAULT_VALUE],
+        [COLUMN_NAME] [DATA_TYPE]
     );
 
 ### Aclarando cuáles valores no pueden ser nulos
 
     CREATE TABLE [TABLE_NAME] (
-        id serial DEFAULT get_random_uuid() NOT NULL,
-        name VARCHAR(N)
+        [COLUMN_NAME] [DATA_TYPE] DEFAULT [DEFAULT_VALUE] NOT NULL,
+        [COLUMN_NAME] [DATA_TYPE]
+    );
+
+### DEFINIENDO LAS RESTRICCIONES
+- ESTA ES UNA FORMA PERO NO ES ACEPTADA EN TODOS LOS MOTORES DE DB
+***
+    CREATE TABLE [TABLE_NAME] (
+        [COLUMN_NAME] [DATA_TYPE] DEFAULT [DEFAULT_VALUE] NOT NULL PRIMARY KEY,
+        [COLUMN_NAME] [DATA_TYPE]
+    );
+- OTRA FORMA ES CON UN CONSTRAINT, QUE SE DEFINE AL FINAL DE LOS ATRIBUTOS, SE LE DA UN ALIAS, SE LE ESTABLECE LA RESTRICCIÓN, Y ENTRE () SE DEFINE CUÁL ES EL CAMPO QUE AFECTA (PUEDEN SER MÁS DE UNA {COMPUESTA}). (EL ALIAS SE COMPONE POR EL NOMBRE DE LA TABLA, EL NOMBRE DEL CAMPO, Y LA ABREVIATURA DE LA RESTRICCIÓN).
+***
+    CREATE TABLE [TABLE_NAME] (
+        [COLUMN_NAME] [DATA_TYPE] DEFAULT [DEFAULT_VALUE] NOT NULL,
+        [COLUMN_NAME] [DATA_TYPE],
+        CONSTRAINT [TABLE_NAME]_[COLUMN_NAME]_[ABREVIATURA_RESTRICCIÓN] PRIMARY KEY ([COLUMN_NAME_1], [COLUMN_NAME_N]),
+        CONSTRAINT [TABLE_NAME]_[COLUMN_NAME]_[ABREVIATURA_RESTRICCIÓN] UNIQUE ([COLUMN_NAME_1], [COLUMN_NAME_N]),
     );
 
 ## ELIMINAR TABLAS
@@ -204,10 +229,10 @@ Donde psql es para tirar comandos con postgres, y seguido va el usuario y la con
 
 ## Eliminar una columna de una tabla:
 
-    ALTER TABLE [TABLE_NAME] DROP COLUMN [COLUMN_NAME]
+    ALTER TABLE [TABLE_NAME] DROP COLUMN [COLUMN_NAME];
 
 ## Agregar una columna a una tabla:
-    ALTER TABLE [TABLE_NAME] ADD COLUMN [COLUMN_NAME] [DATA_TYPE]
+    ALTER TABLE [TABLE_NAME] ADD COLUMN [COLUMN_NAME] [DATA_TYPE];
 
 ## INSERTAR DATOS EN LAS TABLAS
 

@@ -52,6 +52,30 @@ CREATE TABLE students2 (
     updated_at TIMESTAMP
 );
 
+--? CREAR TABLAS CON PK
+DROP TABLE persons;
+DROP TABLE jobs;
+
+CREATE TABLE persons (
+    id UUID DEFAULT gen_random_uuid() NOT NULL,
+    first_name VARCHAR(60) NOT NULL,
+    last_name VARCHAR(60) NOT NULL,
+    birthday DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT now() NOT NULL,
+    updated_at TIMESTAMP,
+    CONSTRAINT persons_id_pk PRIMARY KEY (id),
+    CONSTRAINT persons_first_last_name_uk UNIQUE (first_name, last_name)
+);
+
+CREATE TABLE jobs (
+    id UUID,
+    persons_id UUID,
+    beggins_at DATE,
+    ends_at DATE,
+    is_currently BOOL
+);
+
+
 --* ELIMINAR TABLAS
 
 DROP TABLE para_borrar;

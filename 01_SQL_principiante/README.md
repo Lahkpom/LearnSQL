@@ -415,10 +415,52 @@ Donde psql es para tirar comandos con postgres, y seguido va el usuario y la con
     SELECT * FROM persons 
     WHERE last_name = 'hidalgo' AND first_name = 'facundo' OR birthday = '2000-03-28';
 
-## LIKE (USAMOS EL BLANK _ CUANDO NO SABEMOS QUE LETRA VA PARA QUE LO AUTOCOMPLETE CON CUALQUIER LETRA, COMPLETARÁ TANTOS CARACTERES COM _ LE INDIQUEMOS)
+## LIKE (USAMOS EL BLANK _ CUANDO NO SABEMOS QUE LETRA VA PARA QUE LO AUTOCOMPLETE CON CUALQUIER LETRA, COMPLETARÁ TANTOS CARACTERES COMO _ LE INDIQUEMOS)
     SELECT * FROM persons 
     WHERE last_name LIKE 'hidalg_';
+- caracter por caracter
+*** 
+    SELECT * FROM persons 
+    WHERE last_name LIKE 'hida_go';
+***
+    SELECT * FROM persons 
+    WHERE last_name LIKE 'hi_a_go';
+- que autocomplete
+*** 
+    SELECT * FROM persons 
+    WHERE last_name LIKE 'hid%';
+***
+    SELECT * FROM persons 
+    WHERE last_name LIKE '%algo';
+***
+    SELECT * FROM persons 
+    WHERE last_name LIKE '%dal%';
+***
+    SELECT * FROM persons 
+    WHERE last_name LIKE '%ES PARA%PRUEBA';
 
+## ILIKE NOS SIRVE PARA COMPRAR SIN TENER EN CUENTA EL CASE SENSITIVE
+    SELECT * FROM persons
+    WHERE last_name ILIKE 'HiDaLgO';
+- Esto también puede mezclarse con los _ y %
 
+## BETWEEN PARA CONSULTAR POR UN RANGO
+- LOS VALORES SON INCLUYENTES
+    SELECT * FROM persons 
+    WHERE birthday 
+        BETWEEN '1998-12-03' AND '2001-08-14';
+
+## IN 
+
+### PARA UN GRUPO DE VALORES EN VEZ DE UNO SOLO
+    WHERE [COLUMN_NAME] IN ([VALUE_1], [VALUE_N]);
+    SELECT * FROM [TABLE_NAME]
+
+### CON SELECT 
+- ESTO ME TRAE TODOS LOS ID DE PERSONS QUE ESTÉN EN PERSONS_ID DE JOBS
+    SELECT * FROM persons
+    WHERE id IN (
+        SELECT persons_id FROM jobs
+    );
 
 

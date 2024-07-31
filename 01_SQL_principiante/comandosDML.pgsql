@@ -181,5 +181,48 @@ WHERE last_name = 'hidalgo'
 INSERT INTO persons
 VALUES (DEFAULT, 'PRUEBA', 'hidalgi', now(), DEFAULT, NULL);
 
+--* caracter por caracter
 SELECT * FROM persons 
-WHERE last_name LIKE 'hidalg_';
+WHERE last_name LIKE 'hida_go';
+
+SELECT * FROM persons 
+WHERE last_name LIKE 'hi_a_go';
+
+--* que autocomplete
+
+SELECT * FROM persons 
+WHERE last_name LIKE 'hid%';
+
+SELECT * FROM persons 
+WHERE last_name LIKE '%algo';
+
+SELECT * FROM persons 
+WHERE last_name LIKE '%dal%';
+
+INSERT INTO persons 
+VALUES 
+(DEFAULT, 'PRUEBA', 'ESTO ES PARA UNA PRUEBA', now(), DEFAULT, NULL);
+
+SELECT * FROM persons 
+WHERE last_name LIKE '%ES PARA%PRUEBA';
+
+--? ILIKE NOS SIRVE PARA COMPRAR SIN TENER EN CUENTA EL CASE SENSITIVE
+SELECT * FROM persons
+WHERE last_name ILIKE 'HiDaLgO';
+
+--! BETWEEN 
+
+SELECT * FROM persons 
+    WHERE birthday 
+        BETWEEN '1998-12-03' AND '2001-08-14';
+
+--! IN ES PARA UN GRUPO DE VALORES EN VEZ DE UNO SOLO
+SELECT * FROM persons
+    WHERE first_name IN ('leonel', 'fiorella');
+
+--! IN CON SELECT 
+--* ESTO ME TRAE TODOS LOS ID DE PERSONS QUE ESTÉN EN PERSONS_ID DE JOBS
+SELECT * FROM persons
+WHERE id IN (
+    SELECT persons_id FROM jobs
+);

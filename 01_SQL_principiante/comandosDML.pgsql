@@ -162,3 +162,24 @@ upper(first_name) AS ALIAS_2,
 2 + 2 AS ALIAS_3, 
 birthday::TIMESTAMP 
 FROM persons;
+
+--! WHERE
+
+SELECT * FROM persons WHERE first_name = 'leonel';
+DELETE FROM persons WHERE first_name = 'PARA BORRAR';
+
+--? CON FUNCIONES
+SELECT * FROM persons WHERE upper(first_name) <> 'LEONEL';
+
+--? AND OR
+SELECT * FROM persons 
+WHERE last_name = 'hidalgo' 
+    AND first_name = 'facundo' 
+    OR birthday = '2000-03-28';
+
+--? LIKE
+INSERT INTO persons
+VALUES (DEFAULT, 'PRUEBA', 'hidalgi', now(), DEFAULT, NULL);
+
+SELECT * FROM persons 
+WHERE last_name LIKE 'hidalg_';

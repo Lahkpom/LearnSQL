@@ -450,7 +450,7 @@ Donde psql es para tirar comandos con postgres, y seguido va el usuario y la con
     WHERE birthday 
         BETWEEN '1998-12-03' AND '2001-08-14';
 
-## IN 
+## IN PARA VARIOS VALORES 
 
 ### PARA UN GRUPO DE VALORES EN VEZ DE UNO SOLO
     WHERE [COLUMN_NAME] IN ([VALUE_1], [VALUE_N]);

@@ -2,6 +2,8 @@
 
 CREATE DATABASE facturacion;
 
+--? CREACIÓN DE TABLAS
+
 CREATE TABLE persons (
     id UUID DEFAULT gen_random_uuid() NOT NULL,
     first_name VARCHAR(60) NOT NULL,
@@ -49,6 +51,8 @@ CREATE TABLE invoice_items (
         ON UPDATE RESTRICT
         ON DELETE RESTRICT
 );
+
+--? SE INSERTAN VALORES
 
 INSERT INTO persons
 VALUES (DEFAULT, 'LEONEL', 'HIDALGO', '1998-12-03', DEFAULT, NULL),
@@ -108,4 +112,75 @@ INSERT INTO invoice_items
 VALUES (DEFAULT, '9960da1b-8d8f-44d8-a193-80e6f52b289d', '43614f3b-efee-465b-8706-cb8937a589fe', 14.11, 1),
     (DEFAULT, '9960da1b-8d8f-44d8-a193-80e6f52b289d', '5a6cc715-1a75-43cb-a75f-fdc8389eae77', 1.44, 12);
 
-SELECT DISTINCT last_name FROM persons;
+--? CONSUNTAS
+
+SELECT DISTINCT last_name 
+FROM persons;
+
+SELECT last_name 
+FROM persons
+GROUP BY last_name;
+
+SELECT last_name, first_name 
+FROM persons
+GROUP BY last_name, first_name;
+
+SELECT last_name, COUNT(*) AS cant
+FROM persons
+GROUP BY last_name;
+
+SELECT last_name, COUNT(updated_at) AS cant
+FROM persons
+GROUP BY last_name;
+
+--! PARA CALCULAR EL TOTAL POR ITEM
+SELECT invoice_id, price * quantity AS price 
+FROM invoice_items
+WHERE invoice_id = 'd9ec5cf2-4bd0-4922-83b3-87e442486193';
+
+--! PARA CALCULAR EL TOTAL DE UNA FACTURA (2 OPCIONES)
+SELECT SUM(price * quantity) AS price  
+FROM invoice_items
+WHERE invoice_id = 'd9ec5cf2-4bd0-4922-83b3-87e442486193';
+
+SELECT invoice_id, SUM(price * quantity) AS price 
+FROM invoice_items
+WHERE invoice_id = 'd9ec5cf2-4bd0-4922-83b3-87e442486193'
+GROUP BY invoice_id;
+
+--! PARA SABER EL TOTAL DE TODAS LAS FACTURAS DE LA TABLA (2 OPCIONES)
+SELECT SUM(price * quantity) AS price FROM invoice_items;
+
+SELECT invoice_id, SUM(price * quantity) AS price 
+FROM invoice_items
+GROUP BY invoice_id;
+
+--* ORDENADA POR PRECIO
+SELECT invoice_id, SUM(price * quantity) AS price 
+FROM invoice_items
+GROUP BY invoice_id
+ORDER BY price;
+
+--! PARA SABER EL TOTAL DE TODAS LAS FACTURAS FILTRADO POR FECHA
+SELECT invoice_items.invoice_id, 
+    SUM(invoice_items.price * invoice_items.quantity) AS price 
+FROM invoice_items 
+    JOIN invoices 
+    ON invoice_items.invoice_id = invoices.id
+WHERE invoices.invoice_date = '2024-08-13' 
+GROUP BY invoice_items.invoice_id;
+
+--! PARA SABER DE QUIÉN FUE LA COMPRA, AGREGANDO UN ORDER BY
+SELECT persons.first_name, invoice_items.invoice_id, 
+    SUM(invoice_items.price * invoice_items.quantity) AS price 
+FROM invoice_items 
+    JOIN invoices 
+    ON invoice_items.invoice_id = invoices.id
+    JOIN persons
+    ON invoices.person_id = persons.id
+GROUP BY persons.first_name, invoice_items.invoice_id
+ORDER BY price;
+
+
+
+

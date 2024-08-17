@@ -181,6 +181,98 @@ FROM invoice_items
 GROUP BY persons.first_name, invoice_items.invoice_id
 ORDER BY price;
 
+--! PARA VER LA CANTIDAD DE VENTAS POR PRODCUTO Y EL TOTAL POR PRODUCTO
+--* EL COUNT CUENTA LA CANTIDAD DE REGISTROS, NO LA CANTIDAD DE PRODUCTOS
+--* EL PRIMER SUM() MUESTRA LA CANTIDAD DE PRODUCTOS VENDIDOS
+SELECT product_id, 
+    COUNT(*) AS ventas,
+    SUM(quantity) AS cantidad,
+    SUM(price * quantity) AS total 
+FROM invoice_items
+GROUP BY product_id 
+ORDER BY 2 DESC;
+
+--! HAVING 
+--! CÓMO SABER QUÉ CLIENTE COMPRÓ MÁS VECES?
+SELECT person_id, 
+    COUNT(*) AS compras
+FROM invoices
+GROUP BY person_id
+HAVING COUNT(*) > 2;
+
+--* QUÉ FACTURAS TIENEN MÁS DE 2 PRODUCTOS DISTINTOS
+SELECT invoice_id, COUNT(*) AS cant
+FROM invoice_items
+GROUP BY invoice_id
+HAVING COUNT(*) > 2;
+
+--! LIMIT
+SELECT * 
+FROM invoice_items 
+ORDER BY price 
+LIMIT 3;
+
+--! OFFSET
+SELECT * 
+FROM invoice_items 
+ORDER BY price 
+LIMIT 3
+OFFSET 3;
+
+--! JOIN
+
+--* CROSS JOIN
+SELECT *
+FROM invoices, persons;
+
+SELECT * 
+FROM invoices
+    CROSS JOIN persons;
+
+--! CUÁL ES EL TOTAL DE CADA FACTURA
+SELECT invoice_id, first_name, invoice_date, 
+    SUM(invoice_items.price * quantity) AS total
+FROM persons
+    JOIN invoices
+        ON persons.id = invoices.person_id
+    JOIN invoice_items
+        ON invoices.id = invoice_items.invoice_id
+GROUP BY invoice_id, first_name, invoice_date   
+ORDER BY invoice_id;
+
+--! CUAL ES EL SUBTOTAL DE CADA PRODUCT
+SELECT invoice_id, first_name, invoice_date, product_name, invoice_items.price, quantity, 
+    SUM(invoice_items.price * quantity) AS subtotal
+FROM persons
+    JOIN invoices
+        ON persons.id = invoices.person_id
+    JOIN invoice_items
+        ON invoices.id = invoice_items.invoice_id
+    JOIN products
+        ON invoice_items.product_id = products.id
+GROUP BY invoice_id, first_name, invoice_date, product_name, invoice_items.price, quantity
+ORDER BY invoice_id;
+
+--! SACAR EL PRECIO PROMEDIO DE COMPRA DE CADA PRODUCTO
+SELECT product_name, 
+    SUM(invoice_items.price * quantity) AS price, SUM(quantity) AS cant, 
+    (SUM(invoice_items.price * quantity) / SUM(quantity)) AS PPC
+FROM invoice_items
+    JOIN products
+        ON invoice_items.product_id = products.id
+GROUP BY product_name
+ORDER BY 1;
+
+--! MOSTRAR TODOS LOS CLIENTES ASÍ NO HAYAN HECHO COMPRAS, SI LAS HIZO, MOSTRAR CUÁNTO GASTARON
+SELECT first_name, 
+    SUM(invoice_items.price * quantity) AS buying
+FROM persons
+    LEFT JOIN invoices
+        ON persons.id = invoices.person_id
+    LEFT JOIN invoice_items
+        ON invoices.id = invoice_items.invoice_id
+GROUP BY first_name
+ORDER BY 1;
 
 
 

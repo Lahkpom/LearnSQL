@@ -1,0 +1,144 @@
+CREATE TABLE SALES2 (
+	ID UUID DEFAULT GEN_RANDOM_UUID () NOT NULL,
+	SALE_DATE DATE DEFAULT NOW() NOT NULL,
+	SALE_DETAIL JSONB NOT NULL,
+	CONSTRAINT SALES2_ID_PK PRIMARY KEY (ID)
+);
+
+-- INSERT DATOS JOSN
+INSERT INTO
+	SALES2 (SALE_DATE, SALE_DETAIL)
+VALUES
+	(
+		'2023-02-28',
+		'{
+    	"cliente": "Juan Perez",
+    	"total": 26.75,
+    	"dni": "6775699LP",
+    	"direccion": {
+    	  "descripcion": "Avenida 6 de Agosto",
+    	  "nro": "7B",
+    	  "ciudad": "La Paz"
+    	},
+    	"productos": [
+    	  {
+    	    "nombre": "Producto 1",
+    	    "precio": 10.50,
+    	    "cantidad": 2
+    	  },
+    	  {
+    	    "nombre": "Producto 2",
+    	    "precio": 5.75,
+    	    "cantidad": 1
+    	  }
+    	]
+  	}'
+	),
+	(
+		'2023-02-28',
+		'{
+    	"cliente": "William Barra",
+    	"total": 15.55,
+    	"dni": "5663345SC",
+    	"direccion": {
+    	  "descripcion": "Plaza del estudiante",
+    	  "nro": "1234",
+    	  "ciudad": "La Paz"
+    	},
+    	"productos": [
+    	  {
+    	    "nombre": "Producto 1",
+    	    "precio": 10.50,
+    	    "cantidad": 2
+    	  },
+    	  {
+    	    "nombre": "Producto 3",
+    	    "precio": 15.75,
+    	    "cantidad": 1
+    	  }
+    	]
+  	}'
+	);
+
+-- UPDATE DATOS JSON
+-- MÉTODO: JSONB_SET(JSONB, TEXT[], JSONB[, BOOLEAN])
+-- JSONB ES EL NOMBRE DE LA COLUMNA A MODIFICAR
+-- TEXT ES EL CAMPO QUE QUEREMOS MODIFICAR
+-- JSONB[] ES EL VALOR QUE QUEREMOS INGRESAR
+-- UPDATE DE 1ER NIVEL
+UPDATE SALES2
+SET
+	SALE_DETAIL = JSONB_SET(
+		SALE_DETAIL,
+		'{cliente}',
+		'"William Barra Paredes"'::JSONB
+	)
+WHERE
+	ID = '8f4a3b02-0bbd-4bbe-bb18-7f9e01751b00';
+
+-- UPDATE DE 2 O + NIVELES
+-- EN EL TEXT[] PONEMOS EL 1ER PARÁMETRO SEGUIDO DEL 2DO CON UNA COMA
+-- ESTO ES ASÍ SUCESIBAMENTE CON MÁS NIVELES
+UPDATE SALES2
+SET
+	SALE_DETAIL = JSONB_SET(
+		SALE_DETAIL,
+		'{direccion, ciudad}',
+		'"Bogotá"'::JSONB
+	)
+WHERE
+	ID = '8f4a3b02-0bbd-4bbe-bb18-7f9e01751b00';
+
+-- UPDATE A UN ARRAY DENTRO DEL JSON
+-- CUANDO TENEMOS UN CAMPO CON UN ARRAY, AL MOMENTO DE MENCIONARLO,
+-- DEBEMOS SEPARA CON UNA COMA Y COLOCAR UN NÚMERO CORRESPONDIENTE A
+-- LA POSICIÓN DEL OBJETO QUE QUEREMOS MODIFICAR (COMENZANDO CON CERO)
+-- Y LUEGO VOLVER A SEPARAR CON COMA PARA POSTERIORMENTE INDICAR EL CAMPO
+-- QUE DESEAMOS ALTERAR
+UPDATE SALES2
+SET
+	SALE_DETAIL = JSONB_SET(
+		SALE_DETAIL,
+		'{productos, 1, precio}',
+		'10.75'::JSONB
+	)
+WHERE
+	ID = '8f4a3b02-0bbd-4bbe-bb18-7f9e01751b00';
+
+-- ELIMINACIÓN DE OBJETOS JSON
+INSERT INTO
+	SALES2 (SALE_DATE, SALE_DETAIL)
+VALUES
+	(
+		'2023-02-28',
+		'{
+    "cliente": "Pepito Pep",
+    "total": 10.50,
+    "dni": "1234CB",
+    "direccion": {
+      "descripcion": "Plaza del estudiante",
+      "nro": "1234",
+      "ciudad": "La Paz"
+    },
+    "productos": [
+      {
+        "nombre": "Producto 1",
+        "precio": 10.50,
+        "cantidad": 2
+      }
+    ]
+  }'
+	);
+
+DELETE FROM SALES2 
+WHERE 
+cliente = "Pepito Pep"
+
+
+
+
+
+SELECT
+	*
+FROM
+	SALES2;

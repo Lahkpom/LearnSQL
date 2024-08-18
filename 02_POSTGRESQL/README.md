@@ -11,3 +11,6 @@
 ### C. PRODUCCIÓN
 
 ## 3. PROGRAMACIÓN A NIVEL DE DB
+
+# JSONB
+

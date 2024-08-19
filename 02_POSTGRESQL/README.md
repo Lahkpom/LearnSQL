@@ -13,4 +13,3 @@
 ## 3. PROGRAMACIÓN A NIVEL DE DB
 
 # JSONB
-

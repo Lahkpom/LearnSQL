@@ -13,3 +13,5 @@
 ## 3. PROGRAMACIÓN A NIVEL DE DB
 
 # JSONB
+
+## VER json_managment.sql
